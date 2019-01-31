@@ -3,6 +3,7 @@ import colors
 
 NBLOCKS = 11
 
+
 class GameBoard(pygame.sprite.Sprite):
     """
     The Game Board is a 10x10 grid of spaces which may contain sprite images
@@ -42,16 +43,46 @@ class GameBoard(pygame.sprite.Sprite):
 
         # Draw row and column header backgrounds
         #   Headers should be 1 block wide/tall and use color [header]
+        pygame.draw.rect(self.image, colors.header, (0, 0, self.x_step, self.height))
+        pygame.draw.rect(self.image, colors.header, (0, 0, self.width, self.y_step))
+
 
         # Draw grid lines use color [foreground]
+        for n in range(1, NBLOCKS):
+            pygame.draw.line(self.image, colors.foreground, (self.x_step * n, 0), (self.x_step * n, self.height))
+            pygame.draw.line(self.image, colors.foreground, (0, self.y_step * n), (self.width, self.y_step * n))
 
         # Draw row labels [A-J] centered in each header block
         #    use color [foreground] and font [
+        basicFont = pygame.font.SysFont(None, 24)
 
-        # Draw column labels [0-9] centered in each header block
-        #    use color [foreground]
+        letters = 'A B C D E F G H I J'.split(' ')
 
-        # Draw border around the board use color [foreground]
+        for n in range(1, NBLOCKS):
+
+            a = basicFont.render(letters[n-1], True, colors.foreground, colors.header)
+            aRect = a.get_rect()
+            aRect.centerx = self.x_step * .5
+            aRect.centery = self.y_step * .5 + n * self.y_step
+            self.image.blit(a, aRect)
+
+        #Draw column labels[0 - 9] centered in each header block use color[foreground]
+
+        for n in range(1, NBLOCKS):
+
+            zero = basicFont.render(str(n-1), True, colors.foreground, colors.header)
+            zeroRect = zero.get_rect()
+            zeroRect.centerx = self.x_step * .5 + n * self.x_step
+            zeroRect.centery = self.y_step * .5
+            self.image.blit(zero, zeroRect)
+
+
+
+    # Draw border around the board use color [foreground]
+        pygame.draw.line(self.image, colors.foreground, (0, 0), (self.width, 0))
+        pygame.draw.line(self.image, colors.foreground, (self.width-1, 0), (self.width-1, self.height))
+        pygame.draw.line(self.image, colors.foreground, (self.width, self.height-1), (0, self.height-1))
+        pygame.draw.line(self.image, colors.foreground, (0, self.height), (0, 0))
 
         # --------- END YOUR CODE ------------
 
