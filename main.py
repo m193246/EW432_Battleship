@@ -3,6 +3,9 @@ from pygame.locals import *
 import sys
 
 import colors
+import sprites
+import utilities
+import human
 from game_board import GameBoard
 
 BLOCK_SIZE = 30
@@ -21,6 +24,7 @@ def main():
 
     screen.fill(colors.screen_bkgd)
     pygame.display.set_caption('USNA Battleship')
+    sprites.initialize()
 
     # size of the game board figure based on BLOCK SIZE pixels
     board_dimension = (BLOCK_SIZE * NBLOCKS, BLOCK_SIZE * NBLOCKS)
@@ -58,6 +62,11 @@ def main():
     themRect.centery = TOP_MARGIN / 2
     screen.blit(them, themRect)
     # --------- END YOUR CODE ------------
+
+    # create a human player
+    player1 = human.Human()
+    player1.initialize()
+    player1.draw(my_board, their_board)
 
     # place the board on the screen
     their_board.draw(screen)
