@@ -72,6 +72,7 @@ def main():
     their_board.draw(screen)
     my_board.draw(screen)
 
+    screen.blit(sprites.ship_vertical, (0,0))
     while True:
         # wait for user to click 'X' button
         for event in pygame.event.get():
